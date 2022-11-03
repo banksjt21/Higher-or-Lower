@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    height: 100vh;
+}
+
+#gameContainer {
+    height: 100%;
+}
+
+#players {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.cards {
+    display: flex;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color:rgb(213, 211, 211);
+
+    height: 150px;
+    width: 100px;
+}
+
+.cardInfo {
+    font-size: 40px;
+    display: none;
+}
+
+.show {
+    display: initial;
+}
+
+.buttonsPlay {
+    margin-top: 10px;;
+}
+
+.buttonsPlay .button {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
