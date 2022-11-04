@@ -23,10 +23,18 @@ Players get a new hand of seven cards with each turn.
 */
 
 
+let playerOneElement      = document.querySelector('#playerOne');
+let playerTwoElement      = document.querySelector('#playerTwo');
+
+let playerOneCardsElement = document.querySelector('#playerOneCards');
+let playerTwoCardsElement = document.querySelector('#playerTwoCards');
+
+let playerOneButtonHigher = playerOneElement.querySelector('.higher');
+let playerOneButtonLower  = playerOneElement.querySelector('.lower');
+let playerTwoButtonHigher = playerTwoElement.querySelector('.higher');
+let playerTwoButtonLower  = playerTwoElement.querySelector('.lower');
 
 
-let p1CardsElement = document.querySelector('#playerOneCards');
-let p2CardsElement = document.querySelector('#playerTwoCards');
 
 function random() {
     return Math.random();
@@ -56,7 +64,7 @@ class Game {
             card.setAttribute('class', 'card');
 
             let cardInfo = document.createElement('span');
-            cardInfo.setAttribute('class', 'cardInfo');
+            cardInfo.setAttribute('class', 'cardInfo hide');
             cardInfo.textContent = player.playerCards[i];
 
             card.append(cardInfo);
@@ -66,8 +74,8 @@ class Game {
 
     //  Display player cards
     displayCards() {
-        this.createCardElements(this.playerOne, p1CardsElement);
-        this.createCardElements(this.playerTwo, p2CardsElement);
+        this.createCardElements(this.playerOne, playerOneCardsElement);
+        this.createCardElements(this.playerTwo, playerTwoCardsElement);
     }
 
 
@@ -83,38 +91,163 @@ class Game {
 
         //  Determine who plays first
         this.playerOne.determineFirstPlayer(this.playerOne, this.playerTwo);
+
+        //  Set elements determined by who plays first
         if(this.playerOne.playFirst === true) {
             this.firstPlayer              = this.playerOne;
-            this.firstPlayerCardsElement  = p1CardsElement;
+            this.firstPlayerCardsElement  = playerOneCardsElement;
+            this.first                    = 'playerOne';
             this.secondPlayer             = this.playerTwo;
-            this.secondPlayerCardsElement = p2CardsElement;
+            this.secondPlayerCardsElement = playerTwoCardsElement;
+            this.second                   = 'playerTwo';
         } else {
             this.firstPlayer              = this.playerTwo;
-            this.firstPlayerCardsElement  = p2CardsElement;
-            this.secondPlayer             = this.playerOne;
-            this.secondPlayerCardsElement = p1CardsElement;
+            this.firstPlayerCardsElement  = playerTwoCardsElement;
+            this.first                    = 'playerTwo';
+            this.secondPlayer             = this.secondPlayer;
+            this.secondPlayerCardsElement = playerOneCardsElement;
+            this.second                   = 'playerOne';
         }
+
+        this.firstPlayerStatusElement   = document.querySelector(`#${this.first}`).querySelector('.playerStatus');
+        this.firstPlayerMessageElement  = document.querySelector(`#${this.first}`).querySelector('.message');
+        this.firstPlayerButtonHigher    = document.querySelector(`#${this.first}`).querySelector('.higher');
+        this.firstPlayerButtonLower     = document.querySelector(`#${this.first}`).querySelector('.lower');
+
+        this.secondPlayerStatusElement  = document.querySelector(`#${this.second}`).querySelector('.playerStatus');
+        this.secondPlayerMessageElement = document.querySelector(`#${this.second}`).querySelector('.message');
+        this.secondPlayerButtonHigher   = document.querySelector(`#${this.second}`).querySelector('.higher');
+        this.secondPlayerButtonLower    = document.querySelector(`#${this.second}`).querySelector('.lower');
+
+
+        //  Let first player know that it's their turn to play
+        this.firstPlayerStatusElement.classList.toggle('hide');
+        this.firstPlayerMessageElement.textContent = "Testing";
 
         //  Show firstPlayer card
         this.currentCard = this.firstPlayer.playerCards.shift();
+        this.nextCard    = this.firstPlayer.playerCards.shift();
         this.currentCardElement = this.firstPlayerCardsElement.querySelector('.card').querySelector('.cardInfo');
-        this.currentCardElement.classList.toggle('show');
-        // console.log(this.currentCard)
-        // console.log(this.currentCardElement)
+        // this.nextCardElement    = this.firstPlayerCardsElement.querySelector('.card').nextElementSibling.querySelector('.cardInfo');
+        this.currentCardElement.classList.toggle('hide');
+        // this.nextCardElement.classList.toggle('hide');
 
-        //  
-        this.firstPlayer.guess  = undefined;
-        this.secondPlayer.guess = undefined;
+        //  Disable the secondPlayer buttons
+        this.secondPlayerButtonHigher.toggleAttribute('disabled');
+        this.secondPlayerButtonLower.toggleAttribute('disabled');
 
-        // window.prompt("Is the next card in your deck higher or lower than the one shown?");
+        //  Initialize guesses
+        // this.firstPlayerGuess  = undefined;
+        // this.secondPlayerGuess = undefined;
 
+        // const currentPlayers = [this.playerOne, this.playerTwo];
+
+        //  Define guess functions
+        function checkHigher(theCurrentCard, theNextCard, currentPlayer, evt) {
+            console.log("Checking if card is higher ...");
+            // console.log(evt);
+
+            //  Current cards to compare
+            let currentComparison = [theCurrentCard, theNextCard];
+            for(let c = 0; c < currentComparison.length; c++) {
+                //  Extract the value of the card
+                currentComparison[c] = currentComparison[c].slice(0, -1);
+
+                //  Convert face cards to their string value
+                if(currentComparison[c] === "A" || currentComparison[c] === "J" || currentComparison[c] === "Q" || currentComparison[c] === "K") { 
+                    currentComparison[c] = Deck.convertFaceToValue(currentComparison[c]);
+                }
+
+                //  Convert strings to numbers
+                currentComparison[c] = Number(currentComparison[c]);
+            }
+
+            //  Perform comparison
+            let playerGuess = undefined;
+            console.log(currentComparison);
+            if(currentComparison[1] > currentComparison[0]) {
+                playerGuess = true;
+            } else {
+                playerGuess = false;
+            }
+
+            //  Define messages
+            let currentMessageElement = undefined;
+            let higherText = "Great job! You chose correctly!";
+            let lowerText  = "Oh no. Better luck next time ...";
+
+            //  Update message element with result of guess
+            currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
+            if(playerGuess === true) {
+                currentMessageElement.textContent = higherText;
+            } else {
+                currentMessageElement.textContent = lowerText;
+            }
+        }
+
+
+        function checkLower(theCurrentCard, theNextCard, currentPlayer, evt) {
+            console.log("Checking if card is lower than or equal to ...");
+            // console.log(evt);
+
+            //  Current cards to compare
+            let currentComparison = [theCurrentCard, theNextCard];
+            for(let c = 0; c < currentComparison.length; c++) {
+                //  Extract the value of the card
+                currentComparison[c] = currentComparison[c].slice(0, -1);
+
+                //  Convert face cards to their string value
+                if(currentComparison[c] === "A" || currentComparison[c] === "J" || currentComparison[c] === "Q" || currentComparison[c] === "K") { 
+                    currentComparison[c] = Deck.convertFaceToValue(currentComparison[c]);
+                }
+
+                //  Convert strings to numbers
+                currentComparison[c] = Number(currentComparison[c]);
+            }
+
+            //  Perform comparison
+            let playerGuess = undefined;
+            console.log(currentComparison);
+            if(currentComparison[1] <= currentComparison[0]) {
+                playerGuess = true;
+            } else {
+                playerGuess = false;
+            }
+
+            //  Define messages
+            let currentMessageElement = undefined;
+            let higherText = "Great job! You chose correctly!";
+            let lowerText  = "Oh no. Better luck next time ...";
+
+            //  Update message element with result of guess
+            currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
+            if(playerGuess === true) {
+                currentMessageElement.textContent = higherText;
+            } else {
+                currentMessageElement.textContent = lowerText;
+            }
+        }
+
+
+        //  Add event listener to buttons
+        playerOneButtonHigher.addEventListener('click', (evt) => {checkHigher(this.currentCard, this.nextCard, "playerOne", evt)});
+        playerOneButtonLower.addEventListener('click',  (evt) => { checkLower(this.currentCard, this.nextCard, "playerOne", evt)});        
+        playerTwoButtonHigher.addEventListener('click', (evt) => {checkHigher(this.currentCard, this.nextCard, "playerTwo", evt)});
+        playerTwoButtonLower.addEventListener('click',  (evt) => { checkLower(this.currentCard, this.nextCard, "playerTwo", evt)});
         
+        
+
+
+
+
+
+
+
+
+        // console log the remaining cards
         console.log(this.deck.cardsShuffled);
 
-        //  Set the first card played
-        // this.currentPlayedCard = this.currentDeck.shift();
-        // console.log("First card played");
-        // console.log(this.currentPlayedCard);
+
 
 
         
@@ -129,10 +262,10 @@ class Game {
 class Deck {
     constructor(playerOne, playerTwo) {
         this.cards = [
-            '1♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
-            '1♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
-            '1♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
-            '1♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥'
+            'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+            'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+            'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+            'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥'
         ];
         this.cardCount = this.cards.length;
         this.cardsShuffled = [];
@@ -181,7 +314,24 @@ class Deck {
         player.playerCards.push(this.cardsShuffled.shift());
     }
 
-
+    static convertFaceToValue(faceCard) {
+        switch (faceCard) {
+            case "A":
+                faceCard = '1';
+                return faceCard;
+            case "J":
+                faceCard = '11';
+                return faceCard;
+            case "Q":
+                faceCard = '12';
+                return faceCard;
+            case "K":
+                faceCard = '13';
+                return faceCard;
+            default:
+                break;
+        }
+    }
 
 
 
@@ -259,3 +409,57 @@ game.seven();
 //     '1c', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', '10c', 'Jc', 'Qc', 'Kc',
 //     '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', 'Jh', 'Qh', 'Kh'
 // ];
+
+
+
+        //  Set the first card played
+        // this.currentPlayedCard = this.currentDeck.shift();
+        // console.log("First card played");
+        // console.log(this.currentPlayedCard);
+
+
+
+                // window.prompt("Is the next card in your deck higher or lower than the one shown?");
+
+
+
+                // if(this.playerOne.playFirst === true) {
+                //     let first  = 'playerOne';
+                //     let second = 'playerTwo';
+                // } else {
+                //     let first  = 'playerTwo';
+                //     let second = 'playerOne';
+                // }
+
+                // this.firstPlayer                = first;
+                // this.firstPlayerCardsElement    = playerOneCardsElement;
+                // this.firstPlayerStatusElement   = document.querySelector(`#${first}`).querySelector('.playerStatus');
+                // this.firstPlayerMessageElement  = document.querySelector(`#${first}`).querySelector('.message');
+                // this.secondPlayer               = second;
+                // this.secondPlayerCardsElement   = playerTwoCardsElement;
+                // this.secondPlayerStatusElement  = document.querySelector(`#${second}`).querySelector('.playerStatus');
+                // this.secondPlayerMessageElement = document.querySelector(`#${second}`).querySelector('.message');
+            
+
+
+
+                
+        // if(this.playerOne.playFirst === true) {
+        //     this.firstPlayer                = this.playerOne;
+        //     this.firstPlayerCardsElement    = playerOneCardsElement;
+        //     this.firstPlayerStatusElement   = document.querySelector('#playerOne').querySelector('.playerStatus');
+        //     this.firstPlayerMessageElement  = document.querySelector('#playerOne').querySelector('.message');
+        //     this.secondPlayer               = this.playerTwo;
+        //     this.secondPlayerCardsElement   = playerTwoCardsElement;
+        //     this.secondPlayerStatusElement  = document.querySelector('#playerTwo').querySelector('.playerStatus');
+        //     this.secondPlayerMessageElement = document.querySelector('#playerTwo').querySelector('.message');
+        // } else {
+        //     this.firstPlayer                = this.playerTwo;
+        //     this.firstPlayerCardsElement    = playerTwoCardsElement;
+        //     this.firstPlayerStatusElement   = document.querySelector('#playerTwo').querySelector('.playerStatus');
+        //     this.firstPlayerMessageElement  = document.querySelector('#playerTwo').querySelector('.message');
+        //     this.secondPlayer               = this.playerOne;
+        //     this.secondPlayerCardsElement   = playerOneCardsElement;
+        //     this.secondPlayerStatusElement  = document.querySelector('#playerOne').querySelector('.playerStatus');
+        //     this.secondPlayerMessageElement = document.querySelector('#playerOne').querySelector('.message');
+        // }

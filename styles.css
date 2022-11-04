@@ -7,11 +7,33 @@
 
 body {
     height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #gameContainer {
     height: 100%;
 }
+
+
+.message {
+    font-size: 16px;
+}
+
+h2 {
+    font-weight: 900;
+}
+
+.playerName {
+    display: inline-block;
+}
+
+.playerStatus {
+    font-style: italic;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+
 
 #players {
     height: 100%;
@@ -40,15 +62,14 @@ body {
 
 .cardInfo {
     font-size: 40px;
+}
+
+.hide {
     display: none;
 }
 
-.show {
-    display: initial;
-}
-
 .buttonsPlay {
-    margin-top: 10px;;
+    margin-top: 10px;
 }
 
 .buttonsPlay .button {
@@ -56,5 +77,21 @@ body {
     border-radius: 5px;
     border: 1px solid black;
     cursor: pointer;
+    font-weight: bold;
+    background-color:seagreen;
+    color: white;
 }
+
+.buttonsPlay .button:hover {
+    background-color:cadetblue;
+}
+
+.buttonsPlay .button:disabled {
+    background-color: lightgray;
+}
+
+.buttonsPlay .button:active {
+    background-color: cornflowerblue;
+}
+
 
