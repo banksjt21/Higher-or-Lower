@@ -141,12 +141,13 @@ class Game {
         this.secondPlayerButtonLower.toggleAttribute('disabled');
 
 
-        //  Define guess functions
-        function checkHigher(theCurrentCard, theNextCard, currentPlayer, evt) {
-            console.log("Checking if card is higher ...");
-            // console.log(evt);
+        //  Define guess function
+        function checkNum(theCurrentCard, theNextCard, currentPlayer, evt) {
+            console.log("Checking the number ...");
+            let clickedButton = evt.target.textContent;
 
-            //  Current cards to compare
+
+            //  Prepare current cards to compare
             let currentComparison = [theCurrentCard, theNextCard];
             for(let c = 0; c < currentComparison.length; c++) {
                 //  Extract the value of the card
@@ -161,78 +162,51 @@ class Game {
                 currentComparison[c] = Number(currentComparison[c]);
             }
 
+
             //  Perform comparison
             let playerGuess = undefined;
             console.log(currentComparison);
-            if(currentComparison[1] > currentComparison[0]) {
-                playerGuess = true;
-            } else {
-                playerGuess = false;
-            }
-
-            //  Define messages
-            let currentMessageElement = undefined;
-            let higherText = "Great job! You chose correctly!";
-            let lowerText  = "Oh no. Better luck next time ...";
-
-            //  Update message element with result of guess
-            currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
-            if(playerGuess === true) {
-                currentMessageElement.textContent = higherText;
-            } else {
-                currentMessageElement.textContent = lowerText;
-            }
-        }
-
-
-        function checkLower(theCurrentCard, theNextCard, currentPlayer, evt) {
-            console.log("Checking if card is lower than or equal to ...");
-            // console.log(evt);
-
-            //  Current cards to compare
-            let currentComparison = [theCurrentCard, theNextCard];
-            for(let c = 0; c < currentComparison.length; c++) {
-                //  Extract the value of the card
-                currentComparison[c] = currentComparison[c].slice(0, -1);
-
-                //  Convert face cards to their string value
-                if(currentComparison[c] === "A" || currentComparison[c] === "J" || currentComparison[c] === "Q" || currentComparison[c] === "K") { 
-                    currentComparison[c] = Deck.convertFaceToValue(currentComparison[c]);
+            if(clickedButton === "Higher") {
+                console.log("You chose higher")
+                if(currentComparison[1] > currentComparison[0]) {
+                    playerGuess = true;
+                } else {
+                    playerGuess = false;
                 }
-
-                //  Convert strings to numbers
-                currentComparison[c] = Number(currentComparison[c]);
-            }
-
-            //  Perform comparison
-            let playerGuess = undefined;
-            console.log(currentComparison);
-            if(currentComparison[1] <= currentComparison[0]) {
-                playerGuess = true;
             } else {
-                playerGuess = false;
+                console.log("You chose lower/equal")
+                if(currentComparison[1] <= currentComparison[0]) {
+                    playerGuess = true;
+                } else {
+                    playerGuess = false;
+                }    
             }
+
 
             //  Define messages
             let currentMessageElement = undefined;
-            let higherText = "Great job! You chose correctly!";
-            let lowerText  = "Oh no. Better luck next time ...";
+            let correctText = "Great job! You chose correctly!";
+            let incorrectText  = "Oh no. Better luck next time ...";
+
 
             //  Update message element with result of guess
             currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
             if(playerGuess === true) {
-                currentMessageElement.textContent = higherText;
+                currentMessageElement.textContent = correctText;
+                console.log(correctText);
             } else {
-                currentMessageElement.textContent = lowerText;
+                currentMessageElement.textContent = incorrectText;
+                console.log(incorrectText);
             }
         }
+
 
 
         //  Add event listener to buttons
-        playerOneButtonHigher.addEventListener('click', (evt) => {checkHigher(this.currentCard, this.nextCard, "playerOne", evt)});
-        playerOneButtonLower.addEventListener('click',  (evt) => { checkLower(this.currentCard, this.nextCard, "playerOne", evt)});        
-        playerTwoButtonHigher.addEventListener('click', (evt) => {checkHigher(this.currentCard, this.nextCard, "playerTwo", evt)});
-        playerTwoButtonLower.addEventListener('click',  (evt) => { checkLower(this.currentCard, this.nextCard, "playerTwo", evt)});
+        playerOneButtonHigher.addEventListener('click', (evt) => {checkNum(this.currentCard, this.nextCard, "playerOne", evt)});
+        playerOneButtonLower.addEventListener('click',  (evt) => {checkNum(this.currentCard, this.nextCard, "playerOne", evt)});        
+        playerTwoButtonHigher.addEventListener('click', (evt) => {checkNum(this.currentCard, this.nextCard, "playerTwo", evt)});
+        playerTwoButtonLower.addEventListener('click',  (evt) => {checkNum(this.currentCard, this.nextCard, "playerTwo", evt)});
         
         
 
@@ -479,3 +453,90 @@ game.seven();
         // this.secondPlayerGuess = undefined;
 
         // const currentPlayers = [this.playerOne, this.playerTwo];
+
+
+
+        // function checkHigher(theCurrentCard, theNextCard, currentPlayer, evt) {
+        //     console.log("Checking if card is higher ...");
+        //     console.log(evt);
+
+        //     //  Current cards to compare
+        //     let currentComparison = [theCurrentCard, theNextCard];
+        //     for(let c = 0; c < currentComparison.length; c++) {
+        //         //  Extract the value of the card
+        //         currentComparison[c] = currentComparison[c].slice(0, -1);
+
+        //         //  Convert face cards to their string value
+        //         if(currentComparison[c] === "A" || currentComparison[c] === "J" || currentComparison[c] === "Q" || currentComparison[c] === "K") { 
+        //             currentComparison[c] = Deck.convertFaceToValue(currentComparison[c]);
+        //         }
+
+        //         //  Convert strings to numbers
+        //         currentComparison[c] = Number(currentComparison[c]);
+        //     }
+
+        //     //  Perform comparison
+        //     let playerGuess = undefined;
+        //     console.log(currentComparison);
+        //     if(currentComparison[1] > currentComparison[0]) {
+        //         playerGuess = true;
+        //     } else {
+        //         playerGuess = false;
+        //     }
+
+        //     //  Define messages
+        //     let currentMessageElement = undefined;
+        //     let higherText = "Great job! You chose correctly!";
+        //     let lowerText  = "Oh no. Better luck next time ...";
+
+        //     //  Update message element with result of guess
+        //     currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
+        //     if(playerGuess === true) {
+        //         currentMessageElement.textContent = higherText;
+        //     } else {
+        //         currentMessageElement.textContent = lowerText;
+        //     }
+        // }
+
+
+        // function checkLower(theCurrentCard, theNextCard, currentPlayer, evt) {
+        //     console.log("Checking if card is lower than or equal to ...");
+        //     // console.log(evt);
+
+        //     //  Current cards to compare
+        //     let currentComparison = [theCurrentCard, theNextCard];
+        //     for(let c = 0; c < currentComparison.length; c++) {
+        //         //  Extract the value of the card
+        //         currentComparison[c] = currentComparison[c].slice(0, -1);
+
+        //         //  Convert face cards to their string value
+        //         if(currentComparison[c] === "A" || currentComparison[c] === "J" || currentComparison[c] === "Q" || currentComparison[c] === "K") { 
+        //             currentComparison[c] = Deck.convertFaceToValue(currentComparison[c]);
+        //         }
+
+        //         //  Convert strings to numbers
+        //         currentComparison[c] = Number(currentComparison[c]);
+        //     }
+
+        //     //  Perform comparison
+        //     let playerGuess = undefined;
+        //     console.log(currentComparison);
+        //     if(currentComparison[1] <= currentComparison[0]) {
+        //         playerGuess = true;
+        //     } else {
+        //         playerGuess = false;
+        //     }
+
+        //     //  Define messages
+        //     let currentMessageElement = undefined;
+        //     let higherText = "Great job! You chose correctly!";
+        //     let lowerText  = "Oh no. Better luck next time ...";
+
+        //     //  Update message element with result of guess
+        //     currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
+        //     if(playerGuess === true) {
+        //         currentMessageElement.textContent = higherText;
+        //     } else {
+        //         currentMessageElement.textContent = lowerText;
+        //     }
+        // }
