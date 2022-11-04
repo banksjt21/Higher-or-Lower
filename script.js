@@ -95,52 +95,51 @@ class Game {
         //  Set elements determined by who plays first
         if(this.playerOne.playFirst === true) {
             this.firstPlayer              = this.playerOne;
-            this.firstPlayerCardsElement  = playerOneCardsElement;
             this.first                    = 'playerOne';
             this.secondPlayer             = this.playerTwo;
-            this.secondPlayerCardsElement = playerTwoCardsElement;
             this.second                   = 'playerTwo';
         } else {
             this.firstPlayer              = this.playerTwo;
-            this.firstPlayerCardsElement  = playerTwoCardsElement;
             this.first                    = 'playerTwo';
-            this.secondPlayer             = this.secondPlayer;
-            this.secondPlayerCardsElement = playerOneCardsElement;
+            this.secondPlayer             = this.playerOne;
             this.second                   = 'playerOne';
         }
 
-        this.firstPlayerStatusElement   = document.querySelector(`#${this.first}`).querySelector('.playerStatus');
+        this.firstPlayerCardsElement    = document.querySelector(`#${this.first}`).querySelector(`#${this.first}Cards`);
+        this.firstPlayerCards           = this.firstPlayerCardsElement.querySelectorAll('.card');
+        this.firstPlayerStatusElement   = document.querySelector(`#${this.first}`).querySelector('.status');
         this.firstPlayerMessageElement  = document.querySelector(`#${this.first}`).querySelector('.message');
         this.firstPlayerButtonHigher    = document.querySelector(`#${this.first}`).querySelector('.higher');
         this.firstPlayerButtonLower     = document.querySelector(`#${this.first}`).querySelector('.lower');
+        this.firstPlayerTurns           = 0;
 
-        this.secondPlayerStatusElement  = document.querySelector(`#${this.second}`).querySelector('.playerStatus');
+        this.secondPlayerCardsElement   = document.querySelector(`#${this.second}`).querySelector(`#${this.second}Cards`);
+        this.secondPlayerCards          = this.secondPlayerCardsElement.querySelectorAll('.card');
+        this.secondPlayerStatusElement  = document.querySelector(`#${this.second}`).querySelector('.status');
         this.secondPlayerMessageElement = document.querySelector(`#${this.second}`).querySelector('.message');
         this.secondPlayerButtonHigher   = document.querySelector(`#${this.second}`).querySelector('.higher');
         this.secondPlayerButtonLower    = document.querySelector(`#${this.second}`).querySelector('.lower');
+        this.secondPlayerTurns          = 0;
 
 
         //  Let first player know that it's their turn to play
         this.firstPlayerStatusElement.classList.toggle('hide');
         this.firstPlayerMessageElement.textContent = "Testing";
 
+
         //  Show firstPlayer card
         this.currentCard = this.firstPlayer.playerCards.shift();
         this.nextCard    = this.firstPlayer.playerCards.shift();
-        this.currentCardElement = this.firstPlayerCardsElement.querySelector('.card').querySelector('.cardInfo');
-        // this.nextCardElement    = this.firstPlayerCardsElement.querySelector('.card').nextElementSibling.querySelector('.cardInfo');
+        this.currentCardElement = this.firstPlayerCards[this.firstPlayerTurns].querySelector('.cardInfo');
+        this.firstPlayerTurns++;
+        this.nextCardElement    = this.firstPlayerCards[this.firstPlayerTurns].querySelector('.cardInfo');
         this.currentCardElement.classList.toggle('hide');
-        // this.nextCardElement.classList.toggle('hide');
+
 
         //  Disable the secondPlayer buttons
         this.secondPlayerButtonHigher.toggleAttribute('disabled');
         this.secondPlayerButtonLower.toggleAttribute('disabled');
 
-        //  Initialize guesses
-        // this.firstPlayerGuess  = undefined;
-        // this.secondPlayerGuess = undefined;
-
-        // const currentPlayers = [this.playerOne, this.playerTwo];
 
         //  Define guess functions
         function checkHigher(theCurrentCard, theNextCard, currentPlayer, evt) {
@@ -463,3 +462,20 @@ game.seven();
         //     this.secondPlayerStatusElement  = document.querySelector('#playerOne').querySelector('.playerStatus');
         //     this.secondPlayerMessageElement = document.querySelector('#playerOne').querySelector('.message');
         // }
+
+
+
+        
+
+        //  Store all the individual card elements
+        // this.playerOneCards = playerOneCardsElement.querySelectorAll('.card');
+        // this.playerTwoCards = playerTwoCardsElement.querySelectorAll('.card');
+
+
+
+        
+        //  Initialize guesses
+        // this.firstPlayerGuess  = undefined;
+        // this.secondPlayerGuess = undefined;
+
+        // const currentPlayers = [this.playerOne, this.playerTwo];

@@ -27,7 +27,7 @@ h2 {
     display: inline-block;
 }
 
-.playerStatus {
+.status {
     font-style: italic;
     font-size: 16px;
     margin-left: 20px;
