@@ -376,8 +376,8 @@ class Game {
         if(this.playerGuess === true) {
             console.log(this.currentCardElement, this.nextCardElement)
             this.nextCardElement.classList.toggle('hide');
-            console.log(this.nextCardElement.parentElement)
-            console.log(this.nextCardElement.parentElement.parentElement.lastElementChild)
+            console.log(this.nextCardElement.parentElement);
+            console.log(this.nextCardElement.parentElement.parentElement.lastElementChild);
 
             // if nextCardElement is the last card in the player's hand, end the game
             if(this.nextCardElement.parentElement.isSameNode(this.currentCardElement.parentElement.parentElement.lastElementChild)) {
