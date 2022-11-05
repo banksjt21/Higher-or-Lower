@@ -94,9 +94,15 @@ class Game {
         this.nextCard;
         this.nextCardElement;
         this.currentPlayerCount = 0;
-        // this.currentMessageElement;
+        this.currentMessageElement;
         this.playerGuess = undefined;
         this.tempName;
+
+        this.npCurrentCard;
+        this.npNextCard;
+        this.npCurrentCardElement;
+        this.npNextCardElement;
+        this.nextPlayerCount = 0;
 
 
         //  Set play order
@@ -199,6 +205,14 @@ class Game {
         this.currentCardElement.classList.toggle('hide');
 
 
+        //  Get secondPlayer cards ready for their turn
+        this.npCurrentCard = this.secondPlayer.playerCards.shift();
+        this.npNextCard    = this.secondPlayer.playerCards.shift();
+        this.npCurrentCardElement = this.secondPlayerCards[this.nextPlayerCount].querySelector('.cardInfo');
+        this.nextPlayerCount++;
+        this.npNextCardElement    = this.secondPlayerCards[this.nextPlayerCount].querySelector('.cardInfo');
+
+
         //  Disable the secondPlayer buttons
         this.secondPlayerButtonHigher.toggleAttribute('disabled');
         this.secondPlayerButtonLower.toggleAttribute('disabled');
@@ -207,18 +221,18 @@ class Game {
 
     updateMessage() {
         //  Define messages
-        let currentMessageElement = undefined;
+        // let currentMessageElement = undefined;
         let correctText = "Great job! You chose correctly!";
         let incorrectText  = "Oh no. Better luck next time ...";
 
 
         //  Update message element with result of guess
-        currentMessageElement = document.querySelector(`#${this.tempName}`).querySelector('.message');
+        this.currentMessageElement = document.querySelector(`#${this.tempName}`).querySelector('.message');
         if(this.playerGuess === true) {
-            currentMessageElement.textContent = correctText;
+            this.currentMessageElement.textContent = correctText;
             console.log(correctText);
         } else {
-            currentMessageElement.textContent = incorrectText;
+            this.currentMessageElement.textContent = incorrectText;
             console.log(incorrectText);
         }
     }
@@ -263,10 +277,25 @@ class Game {
         if(this.playerGuess === true) {
             console.log(this.currentCardElement, this.nextCardElement)
             this.nextCardElement.classList.toggle('hide');
-            
+            console.log(this.nextCardElement.parentElement)
+            console.log(this.nextCardElement.parentElement.parentElement.lastElementChild)
+
+            // if nextCardElement is the last card in the player's hand, end the game
+            if(this.nextCardElement.parentElement.isSameNode(this.currentCardElement.parentElement.parentElement.lastElementChild)) {
+                console.log(`${this.currentPlayer.name} wins! Congratulations!`);
+
+                //  Disable all player buttons
+                let buttonsToDisable = document.querySelectorAll('.buttonsPlay button');
+                buttonsToDisable.forEach(function(button) {
+                    button.setAttribute('disabled', "");
+                });
+                console.log("All buttons disabled.")
+                
+                return;
+            }
             this.currentCardElement = this.currentCardElement.parentElement.nextElementSibling.firstChild;
             this.nextCardElement    = this.nextCardElement.parentElement.nextElementSibling.firstChild;
-            console.log(this.currentCardElement, this.nextCardElement)
+            console.log(this.currentCardElement, this.nextCardElement);
         }
 
 
@@ -317,31 +346,20 @@ class Game {
 
 
         this.updateMessage();
-        
+
 
         this.updateCards();
-
-
-        
     }
 
 
-    
 
 
 
-
-
-    gameLoop() {
-        while(this.playerOne.playerCards.length >= 0 || this.playerTwo.playerTwo.length >= 0) {
+    // gameLoop() {
+    //     while(this.playerOne.playerCards.length >= 0 || this.playerTwo.playerTwo.length >= 0) {
             
-        }
-    }
-
-
-
-
-
+    //     }
+    // }
 
 }
     
