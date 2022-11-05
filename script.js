@@ -93,25 +93,40 @@ class Game {
         this.currentCardElement;
         this.nextCard;
         this.nextCardElement;
-        this.currentPlayerCount = 0;
-        this.currentMessageElement;
-        this.playerGuess = undefined;
-        this.tempName;
 
-        this.npCurrentCard;
-        this.npNextCard;
-        this.npCurrentCardElement;
-        this.npNextCardElement;
-        this.nextPlayerCount = 0;
+        this.currentMessageElement;
+        this.nextMessageElement;
+        this.tempMessageElement;
+
+        this.currentStatusElement;
+        this.nextStatusElement;
+        this.tempStatusElement;
+
+        this.playerGuess = undefined;
+
+        this.tempName;
+        this.tempPlayer;
 
         this.tempCurrentCard;
         this.tempNextCard;
-        this.tempPlayer;
+        
+        this.npCurrentCard;
+        this.npNextCard;
+
+        this.npCurrentCardElement;
+        this.npNextCardElement;
+
+        this.tempCurrentCardElement;
+        this.tempNextCardElement;
+
+        this.currentPlayerCount = 0;
+        this.nextPlayerCount = 0;
 
         this.currentPlayerElement;
         this.currentPlayerButtons;
         this.nextPlayerElement;
         this.nextPlayerButtons;
+
 
 
         //  Set play order
@@ -158,6 +173,19 @@ class Game {
         }
     }
 
+    //  Create a single card element, add it to the page
+    createNewCard(player, element) {
+        let card = document.createElement('div');
+            card.setAttribute('class', 'card');
+
+            let cardInfo = document.createElement('span');
+            cardInfo.setAttribute('class', 'cardInfo hide');
+            cardInfo.textContent = player.playerCards.slice(-1)[0];
+
+            card.append(cardInfo);
+            element.append(card);
+    }
+
     //  Display player cards
     displayCards() {
         this.createCardElements(this.playerOne, playerOneCardsElement);
@@ -202,7 +230,8 @@ class Game {
     setupFirstTurn() {
         //  Let first player know that it's their turn to play
         this.firstPlayerStatusElement.classList.toggle('hide');
-        this.firstPlayerMessageElement.textContent = "Good Luck!";
+        this.firstPlayerMessageElement.textContent  = "Good Luck!";
+        this.secondPlayerMessageElement.textContent = "Good Luck!";
 
 
         //  Show firstPlayer card
@@ -233,7 +262,7 @@ class Game {
         //  Define messages
         // let currentMessageElement = undefined;
         let correctText = "Great job! You chose correctly!";
-        let incorrectText  = "Oh no. Better luck next time ...";
+        let incorrectText  = `Oh no. Better luck next time ... The next card was a ${this.nextCard}`;
 
 
         //  Update message element with result of guess
@@ -273,9 +302,11 @@ class Game {
             console.log(this.currentCard, this.nextCard);                   // cards that will be compared on their next turn
             console.log(this.currentPlayer.playerCards);                    // cards remaining in the player's hand
         } else {
-            this.cardsDiscarded.push(this.nextCard);                        // send the card they got wrong to the cardsDiscarded array
-            this.deck.drawCard(this.currentPlayer);                         // draw another card from currentDeck and add it as the last card in their hand
-            this.nextCard = this.currentPlayer.playerCards.shift();         // get the next card from the player's hand for their next turn
+            // this.cardsDiscarded.push(this.nextCard);                        // send the card they got wrong to the cardsDiscarded array
+            // this.currentCardElement.parentElement.remove();        // remove card they got wrong from the browser
+            // this.deck.drawCard(this.currentPlayer);                         // draw another card from currentDeck and add it as the last card in their hand
+            // this.createNewCard(this.currentPlayer, this.currentPlayerElement.querySelector('.cards'));        // Something goes wrong with this section of code
+            // this.nextCard = this.currentPlayer.playerCards.shift();         // get the next card from the player's hand for their next turn
 
             console.log(this.currentCard, this.nextCard);                   // cards that will be compared on their next turn
             console.log(this.currentPlayer.playerCards);                    // cards remaining in the player's hand
@@ -283,33 +314,50 @@ class Game {
             console.log(this.currentDeck);                                  // cards remaining in the currentDeck
 
 
-
-            
-            // console.log(this.currentPlayer.playerCards)                   // current player's hand with the added card
-            // console.log(this.currentDeck)                                 // the remaining cards in the currentDeck
-            
-            // console.log(this.currentCard, this.nextCard);
+            //  Swap the players
+            this.tempPlayer      = this.currentPlayer;                      // store the currentPlayer in a temporary variable
+            this.currentPlayer   = this.nextPlayer;                         // get the nextPlayer and assign them as the currentPlayer
+            this.nextPlayer      = this.tempPlayer;                         // get the player stored in the temporary variable and assign them as the nextPlayer
 
 
-            // this.tempPlayer      = this.currentPlayer;
-            // this.currentPlayer   = this.nextPlayer;
-            // this.nextPlayer      = this.tempPlayer;
+            //  Swap the cards that will be compared
+            this.tempCurrentCard = this.currentCard;                        // store the currentCard in a temporary variable
+            this.tempNextCard    = this.nextCard;                           // store the nextCard in a temporary variable
+            this.currentCard     = this.npCurrentCard;                      // get the nextPlayer's currentCard and assign it as the currentCard (to be compared)
+            this.nextCard        = this.npNextCard;                         // get the nextPlayer's nextCard and assign it as the nextCard (to be compared)
+            this.npCurrentCard   = this.tempCurrentCard;                    // get the former currentCard from the temporary variable and assign it as the nextPlayer's currentCard
+            this.npNextCard      = this.tempNextCard;                       // get the former nextCard from the temporary variable and assign it as the nextPlayer's nextCard
 
 
-            // this.tempCurrentCard = this.currentCard;
-            // this.currentCard     = this.npCurrentCard;
-            // this.nextCard        = this.npNextCard;          // get the current and next cards from the other player's hand
-            // this.npCurrentCard   = this.tempCurrentCard;
+            //  Swap the browser elements
+            this.tempCurrentCardElement = this.currentCardElement;          // store the currentCardElement in a temporary variable
+            this.tempNextCardElement    = this.nextCardElement;             // store the nextCardElement in a temporary variable
+            this.currentCardElement     = this.npCurrentCardElement;        // get the nextPlayer's currentCardElement and assign it as the currentCardElement
+            this.nextCardElement        = this.npNextCardElement;           // get the nextPlayer's nextCardElement and assign it as the nextCardElement
+            this.npCurrentCardElement   = this.tempCurrentCardElement;      // get the former currentCardElement from the temporary variable and assign it as the nextPlayer's currentCardElement
+            this.npNextCardElement      = this.tempNextCardElement;         // get the former nextCardElement from the temporary variable and assign it as the nextPlayer's nextCardElement
 
-            // // this.currentPlayerButtons = this.currentPlayerElement.querySelectorAll('.buttons');
-            // // this.currentPlayerButtons.forEach(function(button) {
-            // //     button.toggleAttribute('disabled');
-            // // })
 
-            // let buttonsToSwitch  = document.querySelectorAll('.buttonsPlay button');
-            // buttonsToSwitch.forEach(function(button) {
-            //     button.toggleAttribute('disabled')
+            // this.tempMessageElement     = this.currentMessageElement;
+            // this.currentMessageElement  = this.nextMessageElement;
+            // this.nextMessageElement     = this.tempMessageElement;
+
+
+            // this.tempStatusElement      = this.currentStatusElement;
+            // this.currentStatusElement   = this.nextStatusElement;
+            // this.nextStatusElement      = this.tempStatusElement;
+
+
+            //  Toggle the buttons
+            // this.currentPlayerButtons = this.currentPlayerElement.querySelectorAll('.buttons');
+            // this.currentPlayerButtons.forEach(function(button) {
+            //     button.toggleAttribute('disabled');
             // })
+
+            let buttonsToSwitch  = document.querySelectorAll('.buttonsPlay button');
+            buttonsToSwitch.forEach(function(button) {
+                button.toggleAttribute('disabled')
+            })
             
 
 
