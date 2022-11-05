@@ -262,7 +262,7 @@ class Game {
         //  Define messages
         // let currentMessageElement = undefined;
         let correctText = "Great job! You chose correctly!";
-        let incorrectText  = `Oh no. Better luck next time ... The next card was a ${this.nextCard}`;
+        let incorrectText  = `Oh no. Better luck next time ... Do you remember the option you selected?`;
 
 
         //  Update message element with result of guess
@@ -377,6 +377,7 @@ class Game {
             if(this.nextCardElement.parentElement.isSameNode(this.currentCardElement.parentElement.parentElement.lastElementChild)) {
                 console.log(`${this.currentPlayer.name} wins! Congratulations!`);
                 this.currentMessageElement.textContent = `${this.currentPlayer.name} wins! Congratulations!`;
+                // this.nextMessageElement.textContent = `You'll get em next time ...`;
 
                 //  Disable all player buttons
                 let buttonsToDisable = document.querySelectorAll('.buttonsPlay button');
