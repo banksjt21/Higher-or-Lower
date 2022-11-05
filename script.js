@@ -104,6 +104,15 @@ class Game {
         this.npNextCardElement;
         this.nextPlayerCount = 0;
 
+        this.tempCurrentCard;
+        this.tempNextCard;
+        this.tempPlayer;
+
+        this.currentPlayerElement;
+        this.currentPlayerButtons;
+        this.nextPlayerElement;
+        this.nextPlayerButtons;
+
 
         //  Set play order
         this.preparePlayers();
@@ -197,20 +206,21 @@ class Game {
 
 
         //  Show firstPlayer card
-        this.currentCard = this.firstPlayer.playerCards.shift();
-        this.nextCard    = this.firstPlayer.playerCards.shift();
-        this.currentCardElement = this.firstPlayerCards[this.currentPlayerCount].querySelector('.cardInfo');
+        this.currentCard          = this.firstPlayer.playerCards.shift();
+        this.nextCard             = this.firstPlayer.playerCards.shift();
+        this.currentCardElement   = this.firstPlayerCards[this.currentPlayerCount].querySelector('.cardInfo');
         this.currentPlayerCount++;
-        this.nextCardElement    = this.firstPlayerCards[this.currentPlayerCount].querySelector('.cardInfo');
+        this.nextCardElement      = this.firstPlayerCards[this.currentPlayerCount].querySelector('.cardInfo');
         this.currentCardElement.classList.toggle('hide');
 
 
         //  Get secondPlayer cards ready for their turn
-        this.npCurrentCard = this.secondPlayer.playerCards.shift();
-        this.npNextCard    = this.secondPlayer.playerCards.shift();
+        this.npCurrentCard        = this.secondPlayer.playerCards.shift();
+        this.npNextCard           = this.secondPlayer.playerCards.shift();
         this.npCurrentCardElement = this.secondPlayerCards[this.nextPlayerCount].querySelector('.cardInfo');
         this.nextPlayerCount++;
         this.npNextCardElement    = this.secondPlayerCards[this.nextPlayerCount].querySelector('.cardInfo');
+        this.npCurrentCardElement.classList.toggle('hide');
 
 
         //  Disable the secondPlayer buttons
@@ -241,31 +251,66 @@ class Game {
     updateCards() {
         //  get the actual player object
         if(this.tempName === "playerOne") {
-            this.currentPlayer = this.playerOne;
-            this.nextPlayer    = this.playerTwo;
+            this.currentPlayer        = this.playerOne;
+            this.nextPlayer           = this.playerTwo;
+            this.currentPlayerElement = document.querySelector('#playerOne');
+            this.nextPlayerElement    = document.querySelector('#playerTwo');
         } else {
-            this.currentPlayer = this.playerTwo;
-            this.nextPlayer    = this.playerOne;
+            this.currentPlayer        = this.playerTwo;
+            this.nextPlayer           = this.playerOne;
+            this.currentPlayerElement = document.querySelector('#playerTwo');
+            this.nextPlayerElement    = document.querySelector('#playerOne');
         }
 
 
         //  Update the current player's hand
+        console.log(this.currentCard, this.nextCard);                       // show the current cards being compared before they are updated
+
         if(this.playerGuess === true) {
-            console.log(this.currentCard, this.nextCard)
-            this.currentCard = this.nextCard;
-            this.nextCard    = this.currentPlayer.playerCards.shift();
-            console.log(this.currentCard, this.nextCard)
-            console.log(this.currentPlayer.playerCards);
+            this.currentCard = this.nextCard;                               // set the nextCard that the player just guessed correctly as the currentCard
+            this.nextCard    = this.currentPlayer.playerCards.shift();      // get another card from the player's hand for their next turn
+
+            console.log(this.currentCard, this.nextCard);                   // cards that will be compared on their next turn
+            console.log(this.currentPlayer.playerCards);                    // cards remaining in the player's hand
         } else {
-            // console.log(this.currentPlayer.playerCards)                   // current player's hand
-            // this.deck.drawCard(this.currentPlayer);                       // draw another card from currentDeck
+            this.cardsDiscarded.push(this.nextCard);                        // send the card they got wrong to the cardsDiscarded array
+            this.deck.drawCard(this.currentPlayer);                         // draw another card from currentDeck and add it as the last card in their hand
+            this.nextCard = this.currentPlayer.playerCards.shift();         // get the next card from the player's hand for their next turn
+
+            console.log(this.currentCard, this.nextCard);                   // cards that will be compared on their next turn
+            console.log(this.currentPlayer.playerCards);                    // cards remaining in the player's hand
+            console.log(this.cardsDiscarded);                               // cards that were not guessed correctly
+            console.log(this.currentDeck);                                  // cards remaining in the currentDeck
+
+
+
+            
             // console.log(this.currentPlayer.playerCards)                   // current player's hand with the added card
             // console.log(this.currentDeck)                                 // the remaining cards in the currentDeck
-            // this.cardsDiscarded.push(this.nextCard)                       // send the card they got wrong to the cardsDiscarded array
+            
+            // console.log(this.currentCard, this.nextCard);
 
 
-            // this.currentCard = this.nextPlayer.playerCards.shift();
-            // this.nextCard = this.nextPlayer.playerCards.shift();          // get the current and next cards from the other player's hand
+            // this.tempPlayer      = this.currentPlayer;
+            // this.currentPlayer   = this.nextPlayer;
+            // this.nextPlayer      = this.tempPlayer;
+
+
+            // this.tempCurrentCard = this.currentCard;
+            // this.currentCard     = this.npCurrentCard;
+            // this.nextCard        = this.npNextCard;          // get the current and next cards from the other player's hand
+            // this.npCurrentCard   = this.tempCurrentCard;
+
+            // // this.currentPlayerButtons = this.currentPlayerElement.querySelectorAll('.buttons');
+            // // this.currentPlayerButtons.forEach(function(button) {
+            // //     button.toggleAttribute('disabled');
+            // // })
+
+            // let buttonsToSwitch  = document.querySelectorAll('.buttonsPlay button');
+            // buttonsToSwitch.forEach(function(button) {
+            //     button.toggleAttribute('disabled')
+            // })
+            
 
 
             // console.log(this.cardsDiscarded);
@@ -283,6 +328,7 @@ class Game {
             // if nextCardElement is the last card in the player's hand, end the game
             if(this.nextCardElement.parentElement.isSameNode(this.currentCardElement.parentElement.parentElement.lastElementChild)) {
                 console.log(`${this.currentPlayer.name} wins! Congratulations!`);
+                this.currentMessageElement.textContent = `${this.currentPlayer.name} wins! Congratulations!`;
 
                 //  Disable all player buttons
                 let buttonsToDisable = document.querySelectorAll('.buttonsPlay button');
@@ -296,6 +342,8 @@ class Game {
             this.currentCardElement = this.currentCardElement.parentElement.nextElementSibling.firstChild;
             this.nextCardElement    = this.nextCardElement.parentElement.nextElementSibling.firstChild;
             console.log(this.currentCardElement, this.nextCardElement);
+        } else {
+            
         }
 
 
