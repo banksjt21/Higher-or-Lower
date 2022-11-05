@@ -395,7 +395,6 @@ class Game {
             
         }
 
-
     }
 
 
@@ -447,8 +446,6 @@ class Game {
 
         this.updateCards();
     }
-
-
 
 
 
