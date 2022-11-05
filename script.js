@@ -34,12 +34,18 @@ let playerOneButtonLower  = playerOneElement.querySelector('.lower');
 let playerTwoButtonHigher = playerTwoElement.querySelector('.higher');
 let playerTwoButtonLower  = playerTwoElement.querySelector('.lower');
 
+let playAgainButton       = document.querySelector('#playAgain');
+playAgainButton.addEventListener('click', playAgain);
 
 
 
 
 function random() {
     return Math.random();
+}
+
+function playAgain() {
+    window.location.reload();
 }
 
 
