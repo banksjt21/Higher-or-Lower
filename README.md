@@ -4,15 +4,17 @@ ___
 Higher or Lower is a family-friendly game that adults and children of all ages can play!
 It's simple ... Guess whether the pip (number or letter) of your card is higher or lower than the one being shown.
 
-## Play now
+## Play Now in Your Browser
+https://github.com/banksjt21/Project-1
 
 
-## What You'll Need To Play With
+## How To Play With a Real Deck
+### What You'll Need To Play
 - 1 or 2 Players
 - Standard 52 Deck of Playing Cards
 
 
-## Notes
+### Notes
 - The players can decide among themselves who plays first.
 - Or to choose who plays first ...
     - The players can spread the cards face-down on the table and select a single card.
@@ -20,7 +22,7 @@ It's simple ... Guess whether the pip (number or letter) of your card is higher 
     - Example: Jack of Clubs is higher than a 10 of Spades. (Card suit does not matter).
 
 
-## Directions
+### Directions
 1. Each player is dealt an equal number of cards face-down
 2. Each player spreads their face-down cards in a row (side-by-side)
 3. Each player flips over their first card
