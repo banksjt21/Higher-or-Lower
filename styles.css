@@ -87,7 +87,7 @@ h2 {
 
     padding: 5px;
     margin: 3px;
-    border: 2px outset white;
+    border: 1px ridge rgba(40, 40, 40, 0.282);
     border-radius: 10px;
     background-color: var(--cardBackground);
 
@@ -97,6 +97,8 @@ h2 {
 
     height: 150px;
     width: 100px;
+
+    box-shadow: 5px 10px 10px grey;
 }
 
 .card:first-child {
@@ -142,21 +144,23 @@ button:active {
 }
 
 .buttonsPlay .button:hover {
-    background-color: green;
+    background-color: white;
+    color: var(--cardBackground);
+    border-color: var(--cardBackground);
     /* color: black; */
 }
 
 .buttonsPlay .button:disabled {
     background-color: transparent;
-    color: rgb(101, 101, 101);
-    cursor:not-allowed;
-    border: 2px outset rgb(231, 231, 231);
+    color: transparent;
+    /* cursor:not-allowed; */
+    border: 2px outset transparent;
 }
 
 
-.buttonsPlay .button:active {
+/* .buttonsPlay .button:active {
     background-color: cornflowerblue;
-}
+} */
 
 
 #playAgain {
@@ -165,5 +169,7 @@ button:active {
 }
 
 #playAgain:hover {
-    background-color: green;
+    background-color: white;
+    color: var(--cardBackground);
+    border-color: var(--cardBackground);
 }
