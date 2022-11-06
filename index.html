@@ -6,36 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1</title>
     <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script defer src="script.js"></script>
 </head>
 <body>
     <header>
-        <h1>SEVEN IN A ROW</h1>
-        <p class="instructions">Note: Aces are equal to 1</p>
-        <button id="playAgain">Start New Game</button>
+        <h1>HIGHER OR LOWER</h1>
+        <p class="instructions">Is the next unflipped card in your hand higher or lower/equal to the one shown?</p>
+        <p class="instructions"></p>
+        <button id="playAgain">Reset Game</button>
     </header>
     <div id="gameContainer">
         <div id="players">
 
             <div id="playerOne">
                 <h2 class="playerName">PLAYER ONE</h2>
-                <span class="status hide">(Is your next card higher or lower/equal?)</span>
+                <span class="status hide">(Your turn)</span>
                 <p class="message">Waiting on Player Two to mess up ...</p>
                 <div id="playerOneCards" class="cards"></div>
                 <div class="buttonsPlay">
                     <button class="button higher">Higher</button>
-                    <button class="button lower">Lower</button>
+                    <button class="button lower">Lower / Equal</button>
                 </div>
                
             </div>
             <div id="playerTwo">
                 <h2 class="playerName">PLAYER TWO</h2>
-                <span class="status hide">(Is your next card higher or lower/equal?)</span>
+                <span class="status hide">(Your turn)</span>
                 <p class="message">Waiting on Player One to mess up ...</p>
                 <div id="playerTwoCards" class="cards"></div>
                 <div class="buttonsPlay">
                     <button class="button higher">Higher</button>
-                    <button class="button lower">Lower</button>
+                    <button class="button lower">Lower / Equal</button>
                 </div>
             </div>
             

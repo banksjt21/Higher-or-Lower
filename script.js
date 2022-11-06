@@ -37,7 +37,8 @@ let playerTwoButtonLower  = playerTwoElement.querySelector('.lower');
 let playAgainButton       = document.querySelector('#playAgain');
 playAgainButton.addEventListener('click', playAgain);
 
-
+let primaryColor          = "black";
+let secondaryColor        = "red";
 
 
 function random() {
@@ -176,8 +177,13 @@ class Game {
 
             card.append(cardInfo);
             element.append(card);
+
+            if(cardInfo.textContent.includes("♥") || cardInfo.textContent.includes("♦")) {
+                cardInfo.style.color = "red";
+            }
         }
     }
+
 
     //  Create a single card element, add it to the page
     createNewCard(player, element) {
@@ -191,6 +197,7 @@ class Game {
             card.append(cardInfo);
             element.append(card);
     }
+
 
     //  Display player cards
     displayCards() {
@@ -362,7 +369,7 @@ class Game {
 
             let buttonsToSwitch  = document.querySelectorAll('.buttonsPlay button');
             buttonsToSwitch.forEach(function(button) {
-                button.toggleAttribute('disabled')
+                button.toggleAttribute('disabled');
             })
             
 
@@ -376,6 +383,8 @@ class Game {
         if(this.playerGuess === true) {
             console.log(this.currentCardElement, this.nextCardElement)
             this.nextCardElement.classList.toggle('hide');
+            this.nextCardElement.parentElement.classList.add('animate__animated');
+            this.nextCardElement.parentElement.classList.add('animate__flipInY');
             console.log(this.nextCardElement.parentElement);
             console.log(this.nextCardElement.parentElement.parentElement.lastElementChild);
 
@@ -522,7 +531,7 @@ class Deck {
     static convertFaceToValue(faceCard) {
         switch (faceCard) {
             case "A":
-                faceCard = '1';
+                faceCard = '14';
                 return faceCard;
             case "J":
                 faceCard = '11';
