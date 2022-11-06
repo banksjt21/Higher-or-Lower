@@ -15,10 +15,11 @@ body {
     background-image: url('background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 header {
-    margin-top: 60px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,7 +28,7 @@ header {
 
 #gameContainer {
     /* height: 100%; */
-    margin-top: 60px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +46,7 @@ header {
 
 h1 {
     font: bold 100px arial, sans-serif;
-    background-color: #565656;
+    background-color: #7fc0c7;
     color: transparent;
     text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.633);
     -webkit-background-clip: text;
@@ -60,6 +61,14 @@ h2 {
 
 .playerName {
     display: inline-block;
+    font: bold 48px arial, sans-serif;
+    background-color: #879799;
+    color: transparent;
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.633);
+    -webkit-background-clip: text;
+       -moz-background-clip: text;
+            background-clip: text;
+    margin-bottom: 10px;
 }
 
 .status {
@@ -75,11 +84,11 @@ h2 {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    margin-bottom: 20px;
 }
 
 #playerOne {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 .cards {
@@ -178,4 +187,9 @@ button:active {
     background-color: white;
     color: var(--cardBackground);
     border-color: var(--cardBackground);
+}
+
+footer {
+    margin-top: 60px;
+    text-align: center;
 }
