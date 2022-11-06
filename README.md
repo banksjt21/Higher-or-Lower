@@ -6,8 +6,8 @@ It's simple ... Guess whether the pip (number or letter) of your card is higher 
 
 ## Play Now in Your Browser
 https://github.com/banksjt21/Project-1
-
-
+  
+  
 ## How To Play With a Real Deck
 ### What You'll Need To Play
 - 1 or 2 Players
