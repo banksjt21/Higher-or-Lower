@@ -22,12 +22,15 @@ It's simple ... Guess whether the pip (number or letter) of your card is higher 
 4. The first player will then guess whether their second card is higher or lower/equal than their first card
 5. The first player will then flip over the second card to reveal its value
 
-If correct:
-- If the first player's guess is correct, then the player has another turn.
-- The first player will then have guess if the third card is higher or lower/equal than their second card.
-- This will continue until the player's guess is incorrect
+    If correct:
+    - If the player's guess is correct, then the player has another turn.
+    - The player will then have guess if the third card is higher or lower/equal than their second card.
+    - This will continue until the player's guess is incorrect
 
-If incorrect:
-- If the first player's guess is incorrect, the second card is placed in a discard pile
-- A new card should be drawn from the remaining card deck and placed at the end of the player's row of cards.
-- The second player then gets a turn to play.
+    If incorrect:
+    - If the player's guess is incorrect, the second card is placed in a discard pile
+    - A new card should be drawn from the remaining card deck and placed at the end of the player's row of cards.
+    - The next player then gets a turn to play.
+
+6. The game will continue until one player flips over all of their cards.
+7. This person is the winner!
