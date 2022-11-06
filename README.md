@@ -8,7 +8,7 @@ This game has been created using HTML, CSS & JavaScript. Basic JavaScript has be
 <br><br>
 
 ## Play Now in Your Browser
-https://github.com/banksjt21/Project-1
+https://banksjt21.github.io/Project-1/
 <br><br>
 
 ## How To Play With a Real Deck
