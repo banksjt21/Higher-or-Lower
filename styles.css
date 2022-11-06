@@ -27,7 +27,7 @@ header {
 
 #gameContainer {
     /* height: 100%; */
-    margin-top: 80px;
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,7 +35,7 @@ header {
 }
 
 .instructions {
-    font-style: italic;
+    /* font-style: italic; */
     font-weight: bold;
 }
 .message {
@@ -44,7 +44,13 @@ header {
 }
 
 h1 {
-    font-size: 40px;
+    font: bold 100px arial, sans-serif;
+    background-color: #565656;
+    color: transparent;
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.633);
+    -webkit-background-clip: text;
+       -moz-background-clip: text;
+            background-clip: text;
     margin-bottom: 10px;
 }
 
