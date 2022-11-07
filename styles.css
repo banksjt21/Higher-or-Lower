@@ -1,14 +1,29 @@
+/*  ===========================================================================
+//  RESET
+===========================================================================  */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+
+
+/*  ===========================================================================
+//  VARIABLES
+===========================================================================  */
 :root {
     --cardBackground: rgb(26, 110, 155);
     --cardPip: var(--cardBackground);
 }
 
+
+
+
+/*  ===========================================================================
+//  TAGS
+===========================================================================  */
 body {
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
@@ -17,32 +32,6 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: var(--cardBackground);
-}
-
-header {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#gameContainer {
-    /* height: 100%; */
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.instructions {
-    /* font-style: italic; */
-    font-weight: bold;
-}
-.message {
-    font-size: 16px;
-    font-weight: bold;
 }
 
 h1 {
@@ -54,10 +43,80 @@ h1 {
        -moz-background-clip: text;
             background-clip: text;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 h2 {
     font-weight: 900;
+}
+
+a {
+    color: black;
+}
+
+
+
+
+/*  ===========================================================================
+//  HEADER
+===============================================================================
+//  HEADER that contains the title, instructions, and a reset button
+===========================================================================  */
+header {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+/*  ===========================================================================
+//  GAME CONTAINER
+===============================================================================
+//  DIV that contains all of the game elements including the players
+===========================================================================  */
+#gameContainer {
+    /* height: 100%; */
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.instructions {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+
+
+/*  ===========================================================================
+//  PLAYERS
+===============================================================================
+//  DIV that contains both of the players
+===========================================================================  */
+#players {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+
+
+
+/*  ===========================================================================
+//  PLAYER
+===============================================================================
+//  DIV that contains a player's name, status, message, and their cards
+===========================================================================  */
+#playerOne {
+    margin-bottom: 20px;
 }
 
 .playerName {
@@ -79,21 +138,22 @@ h2 {
     margin-left: 20px;
 }
 
-
-
-#players {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+.message {
+    font-size: 16px;
+    font-weight: bold;
 }
 
-#playerOne {
-    margin-bottom: 20px;
-}
 
+
+
+/*  ===========================================================================
+//  CARDS
+===============================================================================
+//  DIV that contains each of the players' cards
+===========================================================================  */
 .cards {
     display: flex;
+    margin-bottom: 10px;
 }
 
 .card {
@@ -138,58 +198,51 @@ h2 {
 }
 
 
+
+
+/*  ===========================================================================
+//  BUTTONS
+===============================================================================
+//  Styles for all of the buttons
+//  One button to reset the game
+//  Other buttons to control the gameplay
+===========================================================================  */
 button {
     padding: 10px 15px;
     border-radius: 7px;
     border: 2px outset white;
+    background-color: var(--cardBackground);
     color: white;
     cursor: pointer;
     font-weight: bold;
 }
 
-button:active {
-    border: 2px inset white;
-}
-
-.buttonsPlay {
-    margin-top: 10px;
-}
-
-.buttonsPlay .button {
-    background-color: var(--cardBackground);
-}
-
-.buttonsPlay .button:hover {
+button:hover {
     background-color: white;
     color: var(--cardBackground);
     border-color: var(--cardBackground);
-    /* color: black; */
+}
+
+button:active {
+    border-style: inset;
 }
 
 .buttonsPlay .button:disabled {
     background-color: transparent;
     color: transparent;
-    /* cursor:not-allowed; */
-    border: 2px outset transparent;
+    cursor: default;
+    border-color: transparent;
 }
 
 
-/* .buttonsPlay .button:active {
-    background-color: cornflowerblue;
-} */
 
 
-#playAgain {
-    margin-top: 20px;
-    background-color: var(--cardBackground);
-}
-
-#playAgain:hover {
-    background-color: white;
-    color: var(--cardBackground);
-    border-color: var(--cardBackground);
-}
-
+/*  ===========================================================================
+//  FOOTER
+===============================================================================
+//  FOOTER that contains copyright link and link for the background image
+//  attribution
+===========================================================================  */
 footer {
     margin-top: 60px;
     text-align: center;

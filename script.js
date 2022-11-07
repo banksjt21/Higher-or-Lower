@@ -403,6 +403,7 @@ class Game {
                 
                 return;
             }
+            
             this.currentCardElement = this.currentCardElement.parentElement.nextElementSibling.firstChild;
             this.nextCardElement    = this.nextCardElement.parentElement.nextElementSibling.firstChild;
             console.log(this.currentCardElement, this.nextCardElement);

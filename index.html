@@ -9,16 +9,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script defer src="script.js"></script>
 </head>
+
 <body>
+
+    <!-- HEADER -->
     <header>
         <h1>HIGHER OR LOWER</h1>
         <p class="instructions">Is the next unflipped card in your hand higher or lower/equal to the one shown?</p>
-        <p class="instructions"></p>
         <button id="playAgain">Reset Game</button>
-    </header>
-    <div id="gameContainer">
+    </header><!-- END: HEADER -->
+
+    <!-- MAIN -->
+    <main id="gameContainer">
+
+        <!-- GAME CONTAINER -->
         <div id="players">
 
+            <!-- Player One -->
             <div id="playerOne">
                 <h2 class="playerName">PLAYER ONE</h2>
                 <span class="status hide"></span>
@@ -28,8 +35,9 @@
                     <button class="button higher">Higher</button>
                     <button class="button lower">Lower / Equal</button>
                 </div>
-               
-            </div>
+            </div><!-- END: Player One-->
+
+            <!-- Player Two-->
             <div id="playerTwo">
                 <h2 class="playerName">PLAYER TWO</h2>
                 <span class="status hide"></span>
@@ -39,19 +47,18 @@
                     <button class="button higher">Higher</button>
                     <button class="button lower">Lower / Equal</button>
                 </div>
-            </div>
+            </div><!-- END: Player Two -->
             
-        </div>
+        </div><!-- END: GAME CONTAINER-->
 
-        
+    </main><!-- END: MAIN -->
 
-        <!-- <div id="table">
-            <h2>Card Table</h2>
-            <h3>Played Cards</h3>
-            <div id="tableCards"></div>
-        </div> -->
+    <!-- FOOTER -->
+    <footer>
+        <p>Copyright © 2022. Proudly designed by <a href="https://jermainebanks.com/" target="_blank">Jermaine Banks</a></p>
+        <p>Background Image by <a href="https://www.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_13223496.htm#query=card%20background&position=1&from_view=search&track=sph" target="_blank">Freepik</a>
+     </footer><!-- END: FOOTER -->
 
-    </div>
-    <footer>Background Image by <a href="https://www.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_13223496.htm#query=card%20background&position=1&from_view=search&track=sph">Freepik</a></footer>
 </body>
+
 </html>
