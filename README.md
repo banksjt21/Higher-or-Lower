@@ -1,7 +1,7 @@
 # Higher or Lower
 ___
 
-Higher or Lower is a family-friendly game that adults and children of all ages can play!
+Higher or Lower is a family-friendly card game that adults and children of all ages can play!
 It's simple ... Guess whether the pip (number or letter) of your card is higher or lower than the one being shown.
 
 This game has been created using HTML, CSS & JavaScript. Basic JavaScript has been used to create and control the cards and logic. While animations have been added using the Animate.css library.
