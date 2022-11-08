@@ -60,6 +60,9 @@ playAgainButton.addEventListener('click', playAgain);
 let primaryColor          = "black";
 let secondaryColor        = "red";
 
+//  Audio sound for card flip
+const cardFlip = new Audio('ui-click-97915.mp3');
+
 
 
 
@@ -412,6 +415,8 @@ class Game {
             this.nextCardElement.parentElement.classList.add('animate__flipInY');
             console.log(this.nextCardElement.parentElement);
             console.log(this.nextCardElement.parentElement.parentElement.lastElementChild);
+
+            cardFlip.play();
 
             //  if nextCardElement is the last card in the player's hand, end the game
             if(this.nextCardElement.parentElement.isSameNode(this.currentCardElement.parentElement.parentElement.lastElementChild)) {
