@@ -215,6 +215,7 @@ button {
     color: white;
     cursor: pointer;
     font-weight: bold;
+    box-shadow: 5px 10px 10px grey;
 }
 
 button:hover {
@@ -232,6 +233,7 @@ button:active {
     color: transparent;
     cursor: default;
     border-color: transparent;
+    box-shadow: none;
 }
 
 
