@@ -1,79 +1,50 @@
-/*  ===============================================================================================
-//  HIGHER OR LOWER
-===================================================================================================
-//  - Higher or Lower is a family-friendly card game that adults and children of all ages can play!
-//  - It's simple ... Guess whether the pip (number or letter) of your card is higher or lower than 
-//    the one being shown.
-//  - This game has been created using HTML, CSS & JavaScript. 
-//  - Basic JavaScript has been used to create and control the cards and logic. 
-//  - While animations have been added using the Animate.css library.
-===============================================================================================  */
+
+/*
+CRAZY 8s
+====================
+This game has one crazy twist: eights rule!
+Deal out seven cards to each person in a two-player game, or five cards for games with three or four players.
+The rest go in a draw pile, with one card turned over to start the play pile.
+The player to the dealer's left must match the card's number or suit from the face-up pile.
+A player who does not have a match may play an eight and change the suit to anything they wish.
+A player who has neither a match nor an eight must draw until he gets a card that can be played.
+The first to discard all their cards wins.
+(Did you notice that this game is UNO, without buying a fancy deck?)
+
+SEVEN-IN-A-ROW
+====================
+Place seven cards face-down in a row in front of each player.
+Player 1 turns over her first card. She declares if she thinks the next card will be higher or lower.
+If it is, the process continues.
+If she's wrong (or if the number is the same), she stops and it's the next player's turn.
+Player 2 will see if he can get further than Player 1.
+Essentially, everyone plays until they're wrong, and the first person to finish their row of seven is the winner.
+Players get a new hand of seven cards with each turn.
+*/
 
 
-
-
-/*  ===============================================================================================
-//  GAME LOGIC
-===================================================================================================
-//  - The player order is determined at random each game.
-//  - Seven cards are dealt to each player face-down.
-//  - The first card of each player's hand is placed face-up.
-//  - Each player must select a button that corresponds with whether they think their next unturned
-//    card will be higher or lower/equal to the previous face-up card.
-//  - If the player guesses correctly, then they get to guess again.
-//  - The next card is turned face-up, and the player gets a chance to guess the next unturned card.
-//  - If the player guesses incorrectly, then the next player gets an opportunity to guess whether
-//    the next card in their hand is higher or lower/equal.
-//  - The players then alternate turns each time one guesses incorrectly.
-//  - The first player to guess all of their cards correctly, wins the game.
-//  - At this point, all of the winning player's cards will be overturned.
-//  - A reset button is presented to allow the players to start a new game at any time.
-===============================================================================================  */
-
-
-
-
-/*  ===============================================================================================
-//  GLOBAL VARIABLES
-===================================================================================================
-//  Variables that will be used throughout the appliation
-===============================================================================================  */
-//  Retrieve the player div IDs for each player
 let playerOneElement      = document.querySelector('#playerOne');
 let playerTwoElement      = document.querySelector('#playerTwo');
 
-//  Retrieve the cards element for each player
 let playerOneCardsElement = document.querySelector('#playerOneCards');
 let playerTwoCardsElement = document.querySelector('#playerTwoCards');
 
-//  Retrieve the gameplay buttons for each player
 let playerOneButtonHigher = playerOneElement.querySelector('.higher');
 let playerOneButtonLower  = playerOneElement.querySelector('.lower');
 let playerTwoButtonHigher = playerTwoElement.querySelector('.higher');
 let playerTwoButtonLower  = playerTwoElement.querySelector('.lower');
 
-//  Retrieve the button that will be used to reset the game
 let playAgainButton       = document.querySelector('#playAgain');
 playAgainButton.addEventListener('click', playAgain);
 
-//  Colors that will be used for the card pips (letters / numbers)
 let primaryColor          = "black";
 let secondaryColor        = "red";
 
 
-
-
-/*  ===============================================================================================
-//  GLOBAL FUNCTIONS
-===================================================================================================
-//  Functions that will be used throughout the appliation
-===============================================================================================  */
-//  Generate a random number
 function random() {
     return Math.random();
 }
 
-//  Refreshes the browser to start a new game
 function playAgain() {
     window.location.reload();
 }
@@ -81,11 +52,6 @@ function playAgain() {
 
 
 
-/*  ===============================================================================================
-//  GAME CLASS
-===================================================================================================
-//  Class that controls the entire game.
-===============================================================================================  */
 class Game {
     constructor() {
         //  New Game Started
@@ -116,6 +82,7 @@ class Game {
         this.firstPlayerMessageElement;
         this.firstPlayerButtonHigher;
         this.firstPlayerButtonLower;
+        // this.firstPlayerCount = 0;
 
         this.second;
         this.secondPlayer;
@@ -125,6 +92,7 @@ class Game {
         this.secondPlayerMessageElement;
         this.secondPlayerButtonHigher;
         this.secondPlayerButtonLower;
+        // this.secondPlayerCount = 0;
 
         this.currentPlayer;
         this.nextPlayer;
@@ -167,6 +135,7 @@ class Game {
         this.nextPlayerButtons;
 
 
+
         //  Set play order
         this.preparePlayers();
 
@@ -179,12 +148,21 @@ class Game {
         playerTwoButtonHigher.addEventListener('click', (evt) => {this.checkNum(evt)});
         playerTwoButtonLower.addEventListener('click',  (evt) => {this.checkNum(evt)});
 
-        //  Array to hold the discarded cards
+
+        //  Game Loop
+        this.round = 1;
         this.cardsDiscarded = [];
+
+        console.log(this.playerOne.playerCards.length);
+        console.log(this.playerTwo.playerCards.length);
+
+
+        // this.gameLoop();
 
         // console log the remaining cards
         console.log(this.deck.cardsShuffled);
     }
+
 
 
     //  Create a card element, add it to the page
@@ -228,7 +206,7 @@ class Game {
     }
 
 
-    //  Determines who plays first and sets up variables accordingly
+    //  
     preparePlayers() {
         //  Determine who plays first
         Player.determineFirstPlayer(this);
@@ -262,7 +240,6 @@ class Game {
     }
     
 
-    //  Sets up the first turn for both players
     setupFirstTurn() {
         //  Let first player know that it's their turn to play
         this.firstPlayerStatusElement.classList.toggle('hide');
@@ -294,9 +271,9 @@ class Game {
     }
 
 
-    //  Messages to let the players know whether they guessed correctly or incorrectly
     updateMessage() {
         //  Define messages
+        // let currentMessageElement = undefined;
         let correctText = "Great job! You chose correctly!";
         let incorrectText  = `Oh no. Better luck next time ... Do you remember the option you selected?`;
 
@@ -313,7 +290,6 @@ class Game {
     }
 
 
-    //  Swaps the players' turn, updates browser elements and variables
     updateCards() {
         //  get the actual player object
         if(this.tempName === "playerOne") {
@@ -339,11 +315,11 @@ class Game {
             console.log(this.currentCard, this.nextCard);                   // cards that will be compared on their next turn
             console.log(this.currentPlayer.playerCards);                    // cards remaining in the player's hand
         } else {
-            // this.cardsDiscarded.push(this.nextCard);                     // send the card they got wrong to the cardsDiscarded array
-            // this.currentCardElement.parentElement.remove();              // remove card they got wrong from the browser
-            // this.deck.drawCard(this.currentPlayer);                      // draw another card from currentDeck and add it as the last card in their hand
+            // this.cardsDiscarded.push(this.nextCard);                        // send the card they got wrong to the cardsDiscarded array
+            // this.currentCardElement.parentElement.remove();        // remove card they got wrong from the browser
+            // this.deck.drawCard(this.currentPlayer);                         // draw another card from currentDeck and add it as the last card in their hand
             // this.createNewCard(this.currentPlayer, this.currentPlayerElement.querySelector('.cards'));        // Something goes wrong with this section of code
-            // this.nextCard = this.currentPlayer.playerCards.shift();      // get the next card from the player's hand for their next turn
+            // this.nextCard = this.currentPlayer.playerCards.shift();         // get the next card from the player's hand for their next turn
 
             console.log(this.currentCard, this.nextCard);                   // cards that will be compared on their next turn
             console.log(this.currentPlayer.playerCards);                    // cards remaining in the player's hand
@@ -391,13 +367,12 @@ class Game {
             //     button.toggleAttribute('disabled');
             // })
 
-
-            //  Toggles the disabled attribute on the player buttons
             let buttonsToSwitch  = document.querySelectorAll('.buttonsPlay button');
             buttonsToSwitch.forEach(function(button) {
                 button.toggleAttribute('disabled');
             })
             
+
 
             // console.log(this.cardsDiscarded);
             // this.nextCardElement.classList.toggle('hide');
@@ -413,7 +388,7 @@ class Game {
             console.log(this.nextCardElement.parentElement);
             console.log(this.nextCardElement.parentElement.parentElement.lastElementChild);
 
-            //  if nextCardElement is the last card in the player's hand, end the game
+            // if nextCardElement is the last card in the player's hand, end the game
             if(this.nextCardElement.parentElement.isSameNode(this.currentCardElement.parentElement.parentElement.lastElementChild)) {
                 console.log(`${this.currentPlayer.name} wins! Congratulations!`);
                 this.currentMessageElement.textContent = `${this.currentPlayer.name} wins! Congratulations!`;
@@ -429,8 +404,6 @@ class Game {
                 return;
             }
             
-
-            //  The next set of card elements that will be compared
             this.currentCardElement = this.currentCardElement.parentElement.nextElementSibling.firstChild;
             this.nextCardElement    = this.nextCardElement.parentElement.nextElementSibling.firstChild;
             console.log(this.currentCardElement, this.nextCardElement);
@@ -484,24 +457,23 @@ class Game {
         }
 
 
-        //  Messages to let the players know whether they guessed correctly or incorrectly
         this.updateMessage();
 
 
-        //  Swaps the players' turn, updates browser elements and variables
         this.updateCards();
     }
+
+
+
+    // gameLoop() {
+    //     while(this.playerOne.playerCards.length >= 0 || this.playerTwo.playerTwo.length >= 0) {
+            
+    //     }
+    // }
 
 }
     
 
-
-
-/*  ===============================================================================================
-//  DECK CLASS
-===================================================================================================
-//  Class that represents the deck of cards
-===============================================================================================  */
 class Deck {
     constructor(gameObj) {
         this.cards = [
@@ -534,8 +506,6 @@ class Deck {
         return theDeck;
     }
 
-
-    //  deals cards to the players in alternating order. 
     deal() {
         this.cardsShuffled = this.shuffle();
         this.dealCount = 7;
@@ -555,14 +525,10 @@ class Deck {
         console.log("Cards have been dealt");
     }
 
-
-    //  draw a single card from the deck and add it to the player's hand
     drawCard(currentPlayer) {
         currentPlayer.playerCards.push(this.cardsShuffled.shift());
     }
 
-
-    //  convert the face card to a value
     static convertFaceToValue(faceCard) {
         switch (faceCard) {
             case "A":
@@ -589,11 +555,7 @@ class Deck {
 
 
 
-/*  ===============================================================================================
-//  PLAYER CLASS
-===================================================================================================
-//  Class that represents the players
-===============================================================================================  */
+
 class Player {
     constructor(name) {
         this.name = name;
@@ -603,7 +565,6 @@ class Player {
         console.log(`${this.name} created.`);
     }
 
-    //  Determines who the first player is at random
     static determineFirstPlayer(gameObj) {
         this.playerOne = gameObj.playerOne;
         this.playerTwo = gameObj.playerTwo;
@@ -617,14 +578,209 @@ class Player {
         }
     }
 
+
 }
 
 
 
-
-/*  ===============================================================================================
-//  START THE GAME
-===================================================================================================
-//  Creates a new game object and handles all gameplay functionality
-===============================================================================================  */
+//  Start a new Game
 const game = new Game();
+// game.seven();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TESTING
+// console.log(deck.cards)
+// deck.shuffle();
+// console.log(deck.cardsShuffled)
+// console.log(deck.shuffle2(deck.cards))
+
+
+// class Players {
+//     constructor() {
+//         this.playerOne;
+//         this.playerTwo;
+//         this.playerOneCards = [];
+//         this.playerTwoCards = [];
+//     }
+// }
+
+
+
+
+// this.cards = [
+//     '1s', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', '10s', 'Js', 'Qs', 'Ks',
+//     '1d', '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', '10d', 'Jd', 'Qd', 'Kd',
+//     '1c', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', '10c', 'Jc', 'Qc', 'Kc',
+//     '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', 'Jh', 'Qh', 'Kh'
+// ];
+
+
+
+        //  Set the first card played
+        // this.currentPlayedCard = this.currentDeck.shift();
+        // console.log("First card played");
+        // console.log(this.currentPlayedCard);
+
+
+
+                // window.prompt("Is the next card in your deck higher or lower than the one shown?");
+
+
+
+                // if(this.playerOne.playFirst === true) {
+                //     let first  = 'playerOne';
+                //     let second = 'playerTwo';
+                // } else {
+                //     let first  = 'playerTwo';
+                //     let second = 'playerOne';
+                // }
+
+                // this.firstPlayer                = first;
+                // this.firstPlayerCardsElement    = playerOneCardsElement;
+                // this.firstPlayerStatusElement   = document.querySelector(`#${first}`).querySelector('.playerStatus');
+                // this.firstPlayerMessageElement  = document.querySelector(`#${first}`).querySelector('.message');
+                // this.secondPlayer               = second;
+                // this.secondPlayerCardsElement   = playerTwoCardsElement;
+                // this.secondPlayerStatusElement  = document.querySelector(`#${second}`).querySelector('.playerStatus');
+                // this.secondPlayerMessageElement = document.querySelector(`#${second}`).querySelector('.message');
+            
+
+
+
+                
+        // if(this.playerOne.playFirst === true) {
+        //     this.firstPlayer                = this.playerOne;
+        //     this.firstPlayerCardsElement    = playerOneCardsElement;
+        //     this.firstPlayerStatusElement   = document.querySelector('#playerOne').querySelector('.playerStatus');
+        //     this.firstPlayerMessageElement  = document.querySelector('#playerOne').querySelector('.message');
+        //     this.secondPlayer               = this.playerTwo;
+        //     this.secondPlayerCardsElement   = playerTwoCardsElement;
+        //     this.secondPlayerStatusElement  = document.querySelector('#playerTwo').querySelector('.playerStatus');
+        //     this.secondPlayerMessageElement = document.querySelector('#playerTwo').querySelector('.message');
+        // } else {
+        //     this.firstPlayer                = this.playerTwo;
+        //     this.firstPlayerCardsElement    = playerTwoCardsElement;
+        //     this.firstPlayerStatusElement   = document.querySelector('#playerTwo').querySelector('.playerStatus');
+        //     this.firstPlayerMessageElement  = document.querySelector('#playerTwo').querySelector('.message');
+        //     this.secondPlayer               = this.playerOne;
+        //     this.secondPlayerCardsElement   = playerOneCardsElement;
+        //     this.secondPlayerStatusElement  = document.querySelector('#playerOne').querySelector('.playerStatus');
+        //     this.secondPlayerMessageElement = document.querySelector('#playerOne').querySelector('.message');
+        // }
+
+
+
+        
+
+        //  Store all the individual card elements
+        // this.playerOneCards = playerOneCardsElement.querySelectorAll('.card');
+        // this.playerTwoCards = playerTwoCardsElement.querySelectorAll('.card');
+
+
+
+        
+        //  Initialize guesses
+        // this.firstPlayerGuess  = undefined;
+        // this.secondPlayerGuess = undefined;
+
+        // const currentPlayers = [this.playerOne, this.playerTwo];
+
+
+
+        // function checkHigher(theCurrentCard, theNextCard, currentPlayer, evt) {
+        //     console.log("Checking if card is higher ...");
+        //     console.log(evt);
+
+        //     //  Current cards to compare
+        //     let currentComparison = [theCurrentCard, theNextCard];
+        //     for(let c = 0; c < currentComparison.length; c++) {
+        //         //  Extract the value of the card
+        //         currentComparison[c] = currentComparison[c].slice(0, -1);
+
+        //         //  Convert face cards to their string value
+        //         if(currentComparison[c] === "A" || currentComparison[c] === "J" || currentComparison[c] === "Q" || currentComparison[c] === "K") { 
+        //             currentComparison[c] = Deck.convertFaceToValue(currentComparison[c]);
+        //         }
+
+        //         //  Convert strings to numbers
+        //         currentComparison[c] = Number(currentComparison[c]);
+        //     }
+
+        //     //  Perform comparison
+        //     let playerGuess = undefined;
+        //     console.log(currentComparison);
+        //     if(currentComparison[1] > currentComparison[0]) {
+        //         playerGuess = true;
+        //     } else {
+        //         playerGuess = false;
+        //     }
+
+        //     //  Define messages
+        //     let currentMessageElement = undefined;
+        //     let higherText = "Great job! You chose correctly!";
+        //     let lowerText  = "Oh no. Better luck next time ...";
+
+        //     //  Update message element with result of guess
+        //     currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
+        //     if(playerGuess === true) {
+        //         currentMessageElement.textContent = higherText;
+        //     } else {
+        //         currentMessageElement.textContent = lowerText;
+        //     }
+        // }
+
+
+        // function checkLower(theCurrentCard, theNextCard, currentPlayer, evt) {
+        //     console.log("Checking if card is lower than or equal to ...");
+        //     // console.log(evt);
+
+        //     //  Current cards to compare
+        //     let currentComparison = [theCurrentCard, theNextCard];
+        //     for(let c = 0; c < currentComparison.length; c++) {
+        //         //  Extract the value of the card
+        //         currentComparison[c] = currentComparison[c].slice(0, -1);
+
+        //         //  Convert face cards to their string value
+        //         if(currentComparison[c] === "A" || currentComparison[c] === "J" || currentComparison[c] === "Q" || currentComparison[c] === "K") { 
+        //             currentComparison[c] = Deck.convertFaceToValue(currentComparison[c]);
+        //         }
+
+        //         //  Convert strings to numbers
+        //         currentComparison[c] = Number(currentComparison[c]);
+        //     }
+
+        //     //  Perform comparison
+        //     let playerGuess = undefined;
+        //     console.log(currentComparison);
+        //     if(currentComparison[1] <= currentComparison[0]) {
+        //         playerGuess = true;
+        //     } else {
+        //         playerGuess = false;
+        //     }
+
+        //     //  Define messages
+        //     let currentMessageElement = undefined;
+        //     let higherText = "Great job! You chose correctly!";
+        //     let lowerText  = "Oh no. Better luck next time ...";
+
+        //     //  Update message element with result of guess
+        //     currentMessageElement = document.querySelector(`#${currentPlayer}`).querySelector('.message');
+        //     if(playerGuess === true) {
+        //         currentMessageElement.textContent = higherText;
+        //     } else {
+        //         currentMessageElement.textContent = lowerText;
+        //     }
+        // }
