@@ -450,8 +450,8 @@ class Game {
     checkNum(evt) {
         console.log("Checking the number ...");
         let clickedButton = evt.target.textContent;     // "higher" or "lower"
-        this.tempName = evt.path[2].id;                 // "playerOne" or "playerTwo"
-
+        // this.tempName = evt.path[2].id;                 // "playerOne" or "playerTwo"
+        this.tempName = evt.target.parentElement.parentElement.id; // Event.path has been deprecated
 
         //  Prepare current cards to compare
         let currentComparison = [this.currentCard, this.nextCard];
